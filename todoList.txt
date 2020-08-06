@@ -1,0 +1,6 @@
+1. 05 investar 에 있는 디비 명세대로 django 명세 생성
+2. trading logic 생성
+3. deep_learning logic 생성
+4. 스케줄러 및 파이프 라인 구축
+5. 타입스크립트를 통한 vue app 생성 및 quatar 인가 뭔가 웹앱 알아보기
+6. 배포
