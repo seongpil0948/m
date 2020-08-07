@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 class DateModel(models.Model):
     
@@ -76,3 +76,6 @@ class OHLC(models.Model):
     high_price = models.IntegerField(blank=False)
     low_price = models.IntegerField(blank=False)
     close_price = models.IntegerField(blank=False)
+
+    class Meta:
+        abstract = True    

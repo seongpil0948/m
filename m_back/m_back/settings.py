@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'stock'
+    'stock',
+    'drf_yasg',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -119,3 +121,70 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DEBUG_TOOLBAR_PANELS = [
+    'ddt_request_history.panels.request_history.RequestHistoryPanel',  # Here it is
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    'debug_toolbar.panels.settings.SettingsPanel',
+    'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    'debug_toolbar.panels.logging.LoggingPanel',
+    'debug_toolbar.panels.redirects.RedirectsPanel',
+    'debug_toolbar.panels.profiling.ProfilingPanel',
+]
+
+# Django REST framework
+REST_FRAMEWORK = {
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    'NON_FIELD_ERRORS_KEY': 'errors',
+    'USE_X_FORWARDED_HOST': True,
+    'EXCEPTION_HANDLER': 'stock.core.exceptions.custom_exception_handler'
+}
+
+# Swagger
+SWAGGER_SETTINGS = {
+    # 'USE_SESSION_AUTH': False,
+    'SHOW_REQUEST_HEADERS': True,
+    'SECURITY_DEFINITIONS': {
+        'UserID': {
+            'type': 'apiKey',
+            'name': 'X-User-Id',
+            'in': 'header'
+        }
+    },
+    'DEFAULT_FILTER_INSPECTORS': [
+        # TODO: 문서 함 보자
+        'stock.util.swagger_settings.DjangoFilterInspector',
+        # swagger defaults
+        'drf_yasg.inspectors.CoreAPICompatInspector',
+    ],
+    'DEFAULT_FIELD_INSPECTORS': [
+        # custom
+        # TODO: 문서 함 보자
+        'stock.util.swagger_settings.MultiCollectionFormatInspector',
+        # swagger defaults
+        'drf_yasg.inspectors.CamelCaseJSONFilter',
+        'drf_yasg.inspectors.RecursiveFieldInspector',
+        'drf_yasg.inspectors.ReferencingSerializerInspector',
+        'drf_yasg.inspectors.ChoiceFieldInspector',
+        'drf_yasg.inspectors.FileFieldInspector',
+        'drf_yasg.inspectors.DictFieldInspector',
+        'drf_yasg.inspectors.JSONFieldInspector',
+        'drf_yasg.inspectors.HiddenFieldInspector',
+        'drf_yasg.inspectors.RelatedFieldInspector',
+        'drf_yasg.inspectors.SerializerMethodFieldInspector',
+        'drf_yasg.inspectors.SimpleFieldInspector',
+        'drf_yasg.inspectors.StringDefaultFieldInspector',
+    ],
+}
+REDOC_SETTINGS = {
+    'LAZY_RENDERING': False,
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
