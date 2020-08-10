@@ -104,7 +104,7 @@ ENV/
 .mypy_cache/
 
 # Custom
-db.sqlite3
+# db.sqlite3     ========================= 헤이 이거 원상복구해
 logs/*
 !logs/.gitkeep
 db

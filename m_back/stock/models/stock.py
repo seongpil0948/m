@@ -1,13 +1,24 @@
 from .common import *
 from django.db import models
 from django.utils import timezone
+# from asgiref.sync import sync_to_async
 # 반드시 CharField 에는 max_length 를 넣어 줘야 한다.
 
 __all__ = [
     'Company',
-    'DailyPrice'
+    'DailyPrice',
+    'get_all_corper'
 ]
 
+# @sync_to_async
+# async def get_all_corper():
+#     await return [c['code'] for c in Company.objects.values('code')]  
+
+def get_all_corper():
+    codes = []
+    for c in Company.objects.values('code'):
+        codes.append(c['code'])
+    return codes
 
 class Company(DateModel, BaseActiveModel, BaseNameModel):
     code = models.CharField(
