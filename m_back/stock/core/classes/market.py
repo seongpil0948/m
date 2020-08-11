@@ -27,7 +27,7 @@ class Market():
         end = [int(i) for i in end_date.split('-')]
         
         q = DailyPrice.objects.filter(
-            Q(code='100220') &
+            Q(code=self.code) &
             Q(
                 date__gte=datetime.datetime(start[0], start[1], start[2]), 
                 date__lte=datetime.datetime(end[0], end[1], end[2])

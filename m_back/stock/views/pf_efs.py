@@ -18,14 +18,6 @@ for c in codes:
     datas[c] = Market(code=c).get_daily_price['close_price']
 dfs = pd.DataFrame(data=datas)
 
-# TODO: async
-# dfs = pd.DataFrame(
-#     data={
-#         c['code']: 
-#             Market(code=c['code']).get_daily_price['close_price']
-#                 for c in codes
-#     }
-# )
 daily_ret = dfs.pct_change() # percent_change 일간 수익률
 annual_ret = daily_ret.mean() * 252 
 
