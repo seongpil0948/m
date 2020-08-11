@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 from stock.core.classes import Market
 from stock.models import Company, get_all_corper
 """
+매수: %b > 0.8 and MFI > 80
+매도: %b < 0.2 and MFI > 20
+
 볼린저 밴드는 다음과 같이 구성된다.
     1. N기간 동안의 이동평균(MA)
     2. 이동평균 위의 K배 표준편차 상위 밴드
