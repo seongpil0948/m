@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 from stock.core.classes import Market
 from stock.models import Company, get_all_corper
 """
-매수: %b > 0.8 and MFI > 80
-매도: %b < 0.2 and MFI > 20
-
 볼린저 밴드는 다음과 같이 구성된다.
     1. N기간 동안의 이동평균(MA)
     2. 이동평균 위의 K배 표준편차 상위 밴드
@@ -23,31 +20,66 @@ from stock.models import Company, get_all_corper
 """
 codes = get_all_corper()
 df = Market(code=codes[0]).get_daily_price
-df['MA5'] = df['close_price'].rolling(window=5).mean() # mean avg
-df['stddev'] = df['close_price'].rolling(window=5).std()
+df = df[60: 200] # 이동평균은 20 이후부터 표시
+df['MA5'] = df['close_price'].rolling(window=20).mean() # mean avg
+df['stddev'] = df['close_price'].rolling(window=20).std()
 df['upper'] = df['MA5'] + (df['stddev'] * 2)
 df['lower'] = df['MA5'] - (df['stddev'] * 2)
 df['PB'] = (df['close_price'] - df['lower']) / (df['upper'] - df['lower']) # 1
 df['bandwidth'] = (df['upper'] - df['lower']) / df['MA5'] * 100 # 2
-df = df[5:]
 
+"""
+MFI = Money Flow Index(지표) 가격과 거래량 동시분석
+    80 상회 : 강력매수 
+    20 하회: 강력 매도 
+RMF = TP 가 전날보다 상승한 현금 흐름의 합
+
+1 매수: %b > 0.8 and MFI > 80 빨강 삼각형
+3 매도: %b < 0.2 and MFI > 20 파란 삼각형
+5 MFI 와 비교를 위해 100을 곱해서 푸른색 실선
+"""
+df['TP'] = (df['high_price'] + df['low_price'] + df['close_price']) / 3 # typical price
+df['PMF'] = 0 # positive money flow
+df['NMF'] = 0 # negative
+for i in range(len(df.close_price)-1):
+    if df.TP.values[i] < df.TP.values[i+1]:
+        df.PMF.values[i+1] = df.TP.values[i+1] * df.volume.values[i+1]
+        df.NMF.values[i+1] = 0
+    else:
+        df.NMF.values[i+1] = df.TP.values[i+1] * df.volume.values[i+1]
+        df.PMF.values[i+1] = 0
+df['MFR'] = df.PMF.rolling(window=20).sum() / df.NMF.rolling(window=20).sum()
+df['MFI20'] = 100 - 100 / (1 + df['MFR'])
+
+df = df.set_index('date', drop=False)
 plt.figure(figsize=(9, 5)) 
-plt.plot(df.index, df['close_price'], color='#0000ff', label='Close')
+plt.plot(df.index, df['close_price'], color='#0000ff', label='close_price')
 plt.plot(df.index, df['upper'], 'r--', label = 'Upper band')      
-plt.plot(df.index, df['MA5'], 'k--', label='Moving average 5') 
+plt.plot(df.index, df['MA5'], 'k--', label='Moving average 20') 
 plt.plot(df.index, df['lower'], 'c--', label = 'Lower band')
 plt.fill_between(df.index, df['upper'], df['lower'], color='0.9')
+for i in range(len(df.close_price)):
+    if df.PB.values[i] > 0.8 and df.MFI20.values[i] > 80:       # ①
+        plt.plot(df.index.values[i], df.close_price.values[i], 'r^')  
+    elif df.PB.values[i] < 0.2 and df.MFI20.values[i] < 20:     # ③
+        plt.plot(df.index.values[i], df.close_price.values[i], 'bv')  
 plt.legend(loc='best') 
-plt.title('Bollinger Band (5 day, 2 std)') 
+plt.title('Bollinger Band (20 day, 2 std)') 
 
 plt.subplot(2, 1, 1)
 plt.plot(df.index, df['bandwidth'], color='m', label='BandWidth')
 plt.grid(True)
 plt.legend(loc='best')
 
-plt.subplot(2, 1, 2)  # ③
-plt.plot(df.index, df['PB'], color='b', label='%B')
+plt.subplot(2, 1, 2)
+plt.plot(df.index, df['PB'] * 100, 'b', label='%B x 100')       # ⑤ 
+plt.plot(df.index, df['MFI20'], 'g--', label='MFI(20 day)')     # ⑥
+plt.yticks([-20, 0, 20, 40, 60, 80, 100, 120])                  # ⑦
+for i in range(len(df.close_price)):
+    if df.PB.values[i] > 0.8 and df.MFI20.values[i] > 80:
+        plt.plot(df.index.values[i], 0, 'r^')
+    elif df.PB.values[i] < 0.2 and df.MFI20.values[i] < 20:
+        plt.plot(df.index.values[i], 0, 'bv')
 plt.grid(True)
 plt.legend(loc='best')
-
-plt.show()     
+plt.show();   
