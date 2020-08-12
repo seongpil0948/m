@@ -16,7 +16,6 @@ class Market():
     def get_comp_info(self):
         return Company.objects.get(pk=self.code).__dict__
 
-    @property
     def get_daily_price(self, start_date=None, end_date=None):
         if start_date is None:
             start_date = str(datetime.date.today() - datetime.timedelta(days=365))
