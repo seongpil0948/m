@@ -90,3 +90,4 @@ Werkzeug==1.0.1
 wrapt==1.12.1
 xlrd==1.2.0
 yfinance==0.1.54
+mpl_finance
