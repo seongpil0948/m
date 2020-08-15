@@ -4,9 +4,12 @@ from django.db.models import Max
 from stock.core.classes.market import get_times, Market
 from stock.models import Company, DailyPrice
  
+__all__ = [
+    'DualMomentum'    
+]
 
 class DualMomentum(Market):
-    def __init__(self, start_date, end_date, stock_count):
+    def __init__(self, start_date=None, end_date=None, stock_count=10):
         super().__init__() # for codes
         self.corpers = super().all_corp_info
         self.start_date, self.end_date = get_times(start_date=start_date, end_date=end_date)
@@ -24,11 +27,12 @@ class DualMomentum(Market):
         rows = []
         columns = ['code', 'company', 'old_price', 'new_price', 'returns']        
         for i in self.codes:
-            old_query = DailyPrice.objects.filter(code=i, date=self.start_date).aggregate(close_price=Max('close_price'))
-            new_query = DailyPrice.objects.filter(code=i, date=self.end_date).aggregate(close_price=Max('close_price'))
-
-            if new_query['close_price'] is  None or old_query['close_price'] is None: continue
-
+            # .aggregate(close_price=Max('close_price'))
+            old_query = DailyPrice.objects.filter(code=i, date=self.start_date)
+            new_query = DailyPrice.objects.filter(code=i, date=self.end_date)
+            print('code : ', i)
+            if new_query.close_price is  None or old_query.close_price is None:
+                continue
             old_price = int(old_query['close_price'])
             new_price = int(new_query['close_price'])
 
