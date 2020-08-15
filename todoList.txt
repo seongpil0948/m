@@ -1,8 +1,5 @@
-2. trading logic 생성
-3. deep_learning logic 생성
-4. 스케줄러 및 파이프 라인 구축
-5. 타입스크립트를 통한 vue app 생성 및 quatar 인가 뭔가 웹앱 알아보기
-6. 액면분할 ?
-7. 배포
+
+1. Strategies 종합하여 DecisionPolicy를 어떻게 결정할 것인가
+2. 가상의 budget를 사용하여 가상의 매매를 시험 해볼수있는 State 구현
 
 python manage.py shell_plus --notebook

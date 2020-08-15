@@ -5,7 +5,8 @@ import datetime
 from stock.models import Company, DailyPrice
 
 __all__ = [
-    'Market'    
+    'Market',
+    'get_times'
 ]
 
 def get_times(start_date=None, end_date=None):
