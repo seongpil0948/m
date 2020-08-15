@@ -20,7 +20,7 @@ def get_times(start_date=None, end_date=None):
     elif type(end_date) == str:
         end = [int(i) for i in end_date.split('-')]
         end = str(datetime.datetime(end[0], end[1], end[2])).split(' '[0])
-
+    return start, end
 class Market():
     def __init__(self, code=''):
         self.code = code

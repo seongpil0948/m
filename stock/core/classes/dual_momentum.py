@@ -30,11 +30,10 @@ class DualMomentum(Market):
             # .aggregate(close_price=Max('close_price'))
             old_query = DailyPrice.objects.filter(code=i, date=self.start_date)
             new_query = DailyPrice.objects.filter(code=i, date=self.end_date)
-            print('code : ', i)
-            if new_query.close_price is  None or old_query.close_price is None:
+            if len(new_query) == 0 or len(old_query) == 0:
                 continue
-            old_price = int(old_query['close_price'])
-            new_price = int(new_query['close_price'])
+            old_price = int(old_query[0].close_price)
+            new_price = int(new_query[0].close_price)
 
             returns = (new_price / old_price - 1) * 100
             rows.append([i, self.corpers[i].name_ko, 
@@ -62,15 +61,14 @@ class DualMomentum(Market):
         rows = []
         columns = ['code', 'company', 'old_price', 'new_price', 'returns']
 
-        for code in codes:
+        for i in codes:
+            old_query = DailyPrice.objects.filter(code=i, date=self.start_date)
+            new_query = DailyPrice.objects.filter(code=i, date=self.end_date)
+            if len(new_query) == 0 or len(old_query) == 0:
+                continue
 
-            old_query = DailyPrice.objects.filter(code=i, date=self.start_date).aggregate(close_price=Max('close_price'))
-            new_query = DailyPrice.objects.filter(code=i, date=self.end_date).aggregate(close_price=Max('close_price'))
-
-            if new_query['close_price'] is  None or old_query['close_price'] is None: continue
-
-            old_price = int(old_query['close_price'])
-            new_price = int(new_query['close_price'])
+            old_price = int(old_query[0].close_price)
+            new_price = int(new_query[0].close_price)
 
             returns = (new_price / old_price - 1) * 100
             rows.append([i, self.corpers[i].name_ko, 
@@ -82,6 +80,6 @@ class DualMomentum(Market):
         df = df[['code', 'company', 'old_price', 'new_price', 'returns']]
         df = df.sort_values(by='returns', ascending=False)
         print(df)
-        print(f"\nAbasolute momentum ({start_date} ~ {end_date}) : "\
+        print(f"\nAbasolute momentum ({self.start_date} ~ {self.end_date}) : "\
             f"{df['returns'].mean():.2f}%")
         return
