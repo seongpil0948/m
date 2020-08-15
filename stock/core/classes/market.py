@@ -10,20 +10,16 @@ __all__ = [
 
 def get_times(start_date=None, end_date=None):
     if start_date is None:
-        start = str(datetime.date.today() - datetime.timedelta(days=365))
+        start = str(datetime.date.today() - datetime.timedelta(days=730))
     elif type(start_date) == str: # 2020-02-01
         start = [int(i) for i in start_date.split('-')]
-        start = datetime.datetime(start[0], start[1], start[2])
-    
-
+        start = str(datetime.datetime(start[0], start[1], start[2])).split(' '[0])
+        
     if end_date is None:
-        end = str(datetime.date.today())
+        end = str(datetime.date.today() - datetime.timedelta(days=365))
     elif type(end_date) == str:
         end = [int(i) for i in end_date.split('-')]
-        end = datetime.datetime(end[0], end[1], end[2])
-
-    return start, end
-
+        end = str(datetime.datetime(end[0], end[1], end[2])).split(' '[0])
 
 class Market():
     def __init__(self, code=''):
