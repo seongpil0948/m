@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from stock.core.classes import Market
+from stock.core.data import Market
 from stock.models import Company, get_all_corper
 """
 볼린저 밴드는 다음과 같이 구성된다.

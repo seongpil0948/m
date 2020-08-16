@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from stock.core.classes import Market
+from stock.core.data import Market
 from stock.models import Company, get_all_corper
 
 """

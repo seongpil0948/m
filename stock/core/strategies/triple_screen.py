@@ -4,7 +4,7 @@ import datetime
 from mpl_finance import candlestick_ohlc
 import matplotlib.dates as mdates
 
-from stock.core.classes import Market
+from stock.core.data import Market
 from stock.models import Company, get_all_corper
 
 __all__ = [

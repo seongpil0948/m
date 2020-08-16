@@ -1,7 +1,7 @@
 import pandas as pd
 from django.db.models import Max
 
-from stock.core.classes.market import get_times, Market
+from stock.core.data.market import get_times, Market
 from stock.models import Company, DailyPrice
  
 __all__ = [
