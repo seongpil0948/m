@@ -21,7 +21,7 @@ def get_times(start_date=None, end_date=None):
 
 
 class Market():
-    def __init__(self, start_date, end_date, code=''):
+    def __init__(self, start_date, end_date, code='285130'):
         self.code = code
         self.codes = [i['code'] for i in Company.objects.all().values('code')]
         self.start, self.end = get_times(start_date=start_date, end_date=end_date)
