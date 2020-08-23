@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from stock.core.data import Market
 
 
-m = Market('2019-01-01', '2019-09-28','285130')
+m = Market('2019-01-01', '2019-09-28','207940')
 raw_df = m.get_daily_price
 
 # 10일 간의 데이터를 이용하여 다음날의 종가를 예측한다.
@@ -22,6 +22,8 @@ def MinMaxScaler(data):
     # 0으로 나누기 에러가 발생하지 않도록 매우 작은 값(1e-7)을 더해서 나눔
     return numerator / (denominator + 1e-7)
 
+
+dfx = raw_df[['open_price', 'high_price', 'low_price', 'close_price', 'volume']]
 dfx = MinMaxScaler(dfx)
 dfy = dfx[['close_price']]
 
