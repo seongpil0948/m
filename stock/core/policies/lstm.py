@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from stock.core.data import Market
-from stock.core.policies.common import get_train_test_data
+from stock.core.policies.common import get_train_test_data, MinMaxScaler
 
 
 m = Market('2019-01-01', '2019-09-28','207940')
@@ -31,8 +31,14 @@ model.fit(train_x, train_y, epochs=60, batch_size=30)
 pred_y = model.predict(test_x)
 print(len(pred_y), len(test_x), len(test_y))
 
-for p, x, y in enumerate(pred_y, test_x, test_y):
-    print(p, x, y)
+# dfx = raw_df[['open_price', 'high_price', 'low_price', 'close_price', 'volume']]
+# dfx = MinMaxScaler(dfx)
+# dfy = dfx[['close_price']]
+
+# for i, p in enumerate(pred_y):
+#     print(p, test_y[i])
+#     print('------>', raw_df.close_price[i], '--->', raw_df.close_price[i+1])
+#     print("Predict tomorrow's  price :", list(raw_df.close_price)[i] * pred_y[i] / list(dfy.close_price)[i], 'KRW')
 
 # Visualising the results
 """print(pred_y)
@@ -46,4 +52,4 @@ plt.legend()
 plt.show()
 
 # raw_df.close[-1] : dfy.close[-1] = x : pred_y[-1]
-print("Tomorrow's SEC price :", list(raw_df.close_price)[-1] * pred_y[-1] / list(dfy.close_price)[-1], 'KRW')"""
+"""

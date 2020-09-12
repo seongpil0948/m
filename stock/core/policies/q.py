@@ -1,15 +1,19 @@
 from stock.core.data import Market, get_times
+from stock.core.data.codec_json import return_dfs
 import numpy as np
 
 
 class QLearningDecisionPolicy(Market):
-    def __init__(self, budget=10000000, num_stocks=1000, stock_price=100,
-        code='100220', start_date='2018-01-01', end_date='2019-01-01', prices=[]):
+    def __init__(self,
+        prices=[5000, 20000, 30000, 600000], budget=10000000,
+        num_stocks=1000, stock_price=100,
+        code='100220', start_date='2018-01-01', end_date='2019-01-01'):
         self.actions = ['buy', 'sell', 'hold']
         self.budget = budget # 실제로는 API 에서 제공받을 예정
         self.num_stocks = num_stocks
         self.stock_price = stock_price
         self.prices = prices # super().get_daily_price
+        self.epsilon = 0.5
         super().__init__(code=code, start_date=start_date, end_date=end_date)
 
     def select_action(self, step):
@@ -60,7 +64,16 @@ class QLearningDecisionPolicy(Market):
         target_count = 'all'
         for i in range(num_tries):
             action = self.select_action(step=i)
-            final_portfolio = run_simulation(action=action, target_count=target_count, window_size=window_size)
+            final_portfolio = self.run_simulation(action=action, target_count=target_count, window_size=window_size)
             final_portfolios.append(final_portfolio)
         avg, std = np.mean(final_portfolios), np.std(final_portfolios)
         return avg, std
+
+# if __name__ == '__main__':
+dfs = return_dfs(1)
+df = dfs[list(dfs.keys())[0]]
+prices = df['close_price'].to_list()
+column_size = 5
+q = QLearningDecisionPolicy(prices=prices)
+result = q.run_simulations()
+print(result)
