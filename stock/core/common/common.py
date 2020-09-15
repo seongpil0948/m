@@ -1,5 +1,15 @@
 import numpy as np
 
+__all__ = [
+    'MinMaxScaler',
+    'get_train_test_data',
+    'normalize'
+]
+
+# prob distribute
+def normalize(policy):
+    policy = np.clip(policy, 0, 1)
+    return policy / sum(policy)
 
 def MinMaxScaler(data):
     """최솟값과 최댓값을 이용하여 0 ~ 1 값으로 변환"""

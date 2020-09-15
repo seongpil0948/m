@@ -1,5 +1,18 @@
+1. 현재 정확도들이 매우 낮게 나오지만 그것은 정확한 가격을 평가하기때문.
+   custom evalutate 함수가 필요 상승, 하락을 예측 할 수 있도록
+   reward 에 따라서 collector.complete_episode(reward=reward)
+   여러 Agent가 존재한다면 collector.combine_experience([
+      Agent1, Agent2, ...
+   ])
 
-1. Strategies 종합하여 DecisionPolicy를 어떻게 결정할 것인가
-2. 가상의 budget를 사용하여 가상의 매매를 시험 해볼수있는 State 구현
+2. lstm 과 conv의 앙상블 필요
 
-python manage.py shell_plus --notebook
+3. 225 북마크로부터 특징 평면들을 여러개 제작
+   seven plane encoder 라면 7가지 특징 평면에 구서되어 있다. 
+   사용하는건 247페이지에 존재
+
+4 = np.choice() 의 확률 분포를 predict 로 나온 결과의 확률벡터공간과 매치하면 효율적으로 선택 가능하다.
+
+5. 케라스 직렬화 라이브러리는 HDF5 를 사용하면 유연하게 가능하다. 이로부터 프론트엔드로 제공시에 많은 도움이 될 것이다.
+
+6. 강화학습에 문제를 적용할때에는 상태, 행동, 보상을 명시 해야한다.

@@ -30,7 +30,7 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 model.fit(train_x, train_y, epochs=60, batch_size=30)
 pred_y = model.predict(test_x)
 print(len(pred_y), len(test_x), len(test_y))
-
+score = model.evaluate(test_x, test_y, verbose=0)
 # dfx = raw_df[['open_price', 'high_price', 'low_price', 'close_price', 'volume']]
 # dfx = MinMaxScaler(dfx)
 # dfy = dfx[['close_price']]
