@@ -37,6 +37,7 @@ class ExperienceCollector:
         # 최종 보상을 대국의 모든 행동에 적용한다
         self.rewards += [reward for _ in range(num_states)]
 
+        # 각 결정의 어드벤티지를 구한다
         for i in range(num_states):
             advantage = reward - self._current_episode_estimated_values[i]
             self.advantages.append(advantage)

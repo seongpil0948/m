@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from stock.core.data import Market
-from stock.core.policies.common import get_train_test_data, MinMaxScaler
+from stock.core.common import get_train_test_data, MinMaxScaler
 
 
 m = Market('2019-01-01', '2019-09-28','207940')
