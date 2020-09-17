@@ -51,6 +51,10 @@ class Market():
                     data[col] = [] 
                 data[col].append(i.__dict__[col])
         return pd.DataFrame(data=data)
+    
+    @property
+    def close_prices(self):
+        return self.get_daily_price()['close_price'].to_list()
 
     # @property
     # @NotImplemented

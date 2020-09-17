@@ -1,17 +1,17 @@
 import unittest
 
-from dlgo.data.processor import GoDataProcessor
-from dlgo.agent.predict import DeepLearningAgent
-from dlgo.networks.alphago import alphago_model
-from dlgo.agent.pg import PolicyAgent
-from dlgo.agent.predict import load_prediction_agent
-from dlgo.encoders.alphago import AlphaGoEncoder
-from dlgo.rl.simulate import experience_simulation
-from dlgo.networks.alphago import alphago_model
-from dlgo.rl import ValueAgent, load_experience
-from dlgo.agent import load_prediction_agent, load_policy_agent, AlphaGoMCTS
-from dlgo.rl import load_value_agent
-from dlgo.goboard_fast import GameState
+from data.processor import GoDataProcessor
+from agent.predict import DeepLearningAgent
+from networks.alphago import alphago_model
+from agent.pg import PolicyAgent
+from agent.predict import load_prediction_agent
+from encoders.alphago import AlphaGoEncoder
+from rl.simulate import experience_simulation
+from networks.alphago import alphago_model
+from rl import ValueAgent, load_experience
+from agent import load_prediction_agent, load_policy_agent, AlphaGoMCTS
+from rl import load_value_agent
+from goboard_fast import GameState
 
 from keras.callbacks import ModelCheckpoint
 import h5py

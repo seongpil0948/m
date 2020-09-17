@@ -1,10 +1,10 @@
 import numpy as np
 from tensorflow.keras import models
-from tensorflow.keras.layers import Dense, Activation, SG
+from tensorflow.keras.layers import Dense, Activation
 from tensorflow.keras.optimizers import SGD
 
 from stock.core.networks import large
-
+from stock.core.common import StockState
 from stock.core.reinforce.experience import prepare_experience
 
 
@@ -13,8 +13,8 @@ __all__ = [
 ]
 
 class QAgent:
-  def __init__(self, window_size, policy):
-    self.state = StockState
+  def __init__(self, window_size, policy='eps-greedy'):
+    self.state = StockState()
     self.collector = None
     self.window_size = window_size
     self.temperature = 0.0
