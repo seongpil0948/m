@@ -3,18 +3,20 @@ __all__ = [
 ]
 
 class StockState:
-    def __init__(self, budget, num_stocks,
-        previous_state, close_prices, step):
+    def __init__(self, budget, num_stocks, raw_df,
+        window_size=10, previous_state=None, step=0):
         self.budget = budget # 잔고
         self.num_stocks = num_stocks # 보유 주식수
         self.previous_state = previous_state
-        self.close_prices = close_prices # 일별 종가 리스트
+        self.window_size = window_size
+        self.raw_df = raw_df
+        self.df = raw_df[step: self.window_size + step] # window_size 로 슬라이스된 프레임
         self.step = step
         self.actions = ['sell', 'buy', 'hold']
 
     def valid_action(self, action):
         if action == 'buy':
-            return self.budget > self.close_prices[self.step]
+            return self.budget > self.df[self.step]['close_price']
         elif action == 'sell':
             return self.num_stocks > 0
         else:
@@ -23,7 +25,7 @@ class StockState:
     def apply_action(self, action):
         if action == 'buy':
             self.num_stocks += 1
-            self.budget -= self.close_prices[self.step]
+            self.budget -= self.df[self.step]['close_price']
         elif action == 'sell':
             if self.num_stocks < 1:
                 print('you have not enough number of stocks')
@@ -32,10 +34,11 @@ class StockState:
         else:
             return print(f"{action} is not in actions")
         return StockState(
-            self.budget,
-            self.num_stocks,
-            self, 
-            self.close_prices,
+            budget=self.budget,
+            num_stocks=self.num_stocks,
+            raw_df=self.raw_df,
+            window_size=self.window_size,
+            previous_state=self, 
             step=self.step + 1
         )
     
@@ -51,17 +54,6 @@ class StockState:
     @property
     def reward(self):
         return self.portfolio - self.previous_state.portfolio
-
-    @staticmethod
-    def new_state(budget, close_prices):
-        return StockState(
-            budget=budget,
-            close_prices=close_prices,
-            num_stocks=0,
-            previous_state=None,
-            step=0
-        )
-
 
 
   

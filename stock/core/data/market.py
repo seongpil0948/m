@@ -54,7 +54,8 @@ class Market():
     
     @property
     def close_prices(self):
-        return self.get_daily_price()['close_price'].to_list()
+        return self.get_daily_price['close_price'].to_list()
+
 
     # @property
     # @NotImplemented
