@@ -39,11 +39,11 @@ def bolinger_reversal():
     plt.plot(df.index, df['lower'], 'c--', label ='Lower band')
     plt.fill_between(df.index, df['upper'], df['lower'], color='0.9')
 
-    for i in range(0, len(df.close)):
+    for i in range(0, len(df.close_price)):
         if df.PB.values[i] < 0.05 and df.IIP21.values[i] > 0:   
-            plt.plot(df.index.values[i], df.close.values[i], 'r^')
+            plt.plot(df.index.values[i], df.close_price.values[i], 'r^')
         elif df.PB.values[i] > 0.95 and df.IIP21.values[i] < 0: 
-            plt.plot(df.index.values[i], df.close.values[i], 'bv')
+            plt.plot(df.index.values[i], df.close_price.values[i], 'bv')
 
     plt.legend(loc='best')
     plt.subplot(3, 1, 2)

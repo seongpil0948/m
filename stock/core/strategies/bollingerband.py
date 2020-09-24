@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 
 from stock.core.data import Market
-from stock.models import Company, get_all_corper
 """
 볼린저 밴드는 다음과 같이 구성된다.
     1. N기간 동안의 이동평균(MA)
@@ -21,10 +20,9 @@ from stock.models import Company, get_all_corper
 
 __all__ = ['bolinger_band']
 
-def bolinger_band():
-    codes = get_all_corper()
-    df = Market(code=codes[0]).get_daily_price
-    df = df[60: 200] # 이동평균은 20 이후부터 표시
+def bolinger_band(code):
+    df = Market(code=code).get_daily_price
+    # df = df[60: 200] # 이동평균은 20 이후부터 표시
     df['MA5'] = df['close_price'].rolling(window=20).mean() # mean avg
     df['stddev'] = df['close_price'].rolling(window=20).std()
     df['upper'] = df['MA5'] + (df['stddev'] * 2)
@@ -33,6 +31,7 @@ def bolinger_band():
     df['bandwidth'] = (df['upper'] - df['lower']) / df['MA5'] * 100 # 2
 
     """
+    현금 흐름(Money Flow) = 중심 가격 * 거래량
     MFI = Money Flow Index(지표) 가격과 거래량 동시분석
         80 상회 : 강력매수 
         20 하회: 강력 매도 
@@ -42,7 +41,8 @@ def bolinger_band():
     3 매도: %b < 0.2 and MFI > 20 파란 삼각형
     5 MFI 와 비교를 위해 100을 곱해서 푸른색 실선
     """
-    df['TP'] = (df['high_price'] + df['low_price'] + df['close_price']) / 3 # typical price
+    # typical price 중심가격
+    df['TP'] = (df['high_price'] + df['low_price'] + df['close_price']) / 3 
     df['PMF'] = 0 # positive money flow
     df['NMF'] = 0 # negative
     for i in range(len(df.close_price)-1):
@@ -52,7 +52,9 @@ def bolinger_band():
         else:
             df.NMF.values[i+1] = df.TP.values[i+1] * df.volume.values[i+1]
             df.PMF.values[i+1] = 0
+    # Money Flow Ratio 현금흐름 비율
     df['MFR'] = df.PMF.rolling(window=20).sum() / df.NMF.rolling(window=20).sum()
+    # Money Flow Index
     df['MFI20'] = 100 - 100 / (1 + df['MFR'])
 
     df = df.set_index('date', drop=False)
@@ -86,4 +88,5 @@ def bolinger_band():
             plt.plot(df.index.values[i], 0, 'bv')
     plt.grid(True)
     plt.legend(loc='best')
-    plt.show();   
+    plt.show();
+
