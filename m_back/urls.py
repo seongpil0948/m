@@ -6,22 +6,25 @@ from django.conf import settings
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Fitzme service Service Documents",
-        default_version='all',
+        title="SP WORLD",
+        default_version='stock',
         description="""
-        Fitzme service 입니다. 사용 가능한 service API를 탐색하고 테스트할 수 있습니다.
+        Stock World
         """,
         contact=openapi.Contact(
-            name="Intellisys Co., Ltd.",
-            url="http://intellisys.co.kr",
-            email="intellisys@intellisys.co.kr"
+            name="SP WORLD",
+            url="yet..",
+            email="seongpil0948@gmail.com"
         ),
     ),
     public=True,
 )
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('stock.stock_urls'), name='stocks')
+    path('', include('stock.urls.common_urls'), name='stocks'),
+    path('tech/', include('stock.urls.stock_tech_urls'), name='tech'),
+    path('ai/', include('stock.urls.ai_urls'), name='ai')
 ]
 
 if settings.DEBUG:

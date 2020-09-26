@@ -5,18 +5,24 @@ import datetime
 from stock.models import Company, DailyPrice
 
 
-def get_times(start_date=None, end_date=None):
+def get_times(start_date=None, end_date=None, return_type=str):
     if start_date is None:
         start = str(datetime.date.today() - datetime.timedelta(days=730))
     elif type(start_date) == str: # 2020-02-01
         start = [int(i) for i in start_date.split('-')]
-        start = str(datetime.datetime(start[0], start[1], start[2])).split(' ')[0]
+        if return_type == str:
+            start = str(datetime.datetime(start[0], start[1], start[2])).split(' ')[0]
+        elif return_type == 'datetime':
+            start = datetime.datetime(start[0], start[1], start[2])
         
     if end_date is None:
         end = str(datetime.date.today() - datetime.timedelta(days=365))
     elif type(end_date) == str:
         end = [int(i) for i in end_date.split('-')]
-        end = str(datetime.datetime(end[0], end[1], end[2])).split(' ')[0]
+        if return_type == str:
+            end = str(datetime.datetime(end[0], end[1], end[2])).split(' ')[0]
+        elif return_type == 'datetime':
+            end = datetime.datetime(end[0], end[1], end[2])
     return start, end
 
 

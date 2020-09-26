@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, filters
 from stock.models.stock import Company, DailyPrice
-from stock.serializers.stock import CompanySerializer, DailyPriceSerializer
+from stock.serializers.common.stock import CompanySerializer, DailyPriceSerializer
 
 class CompanyViewSet(viewsets.ModelViewSet):
     # pagination_class = GeneralLimitOffsetPagination
