@@ -32,7 +32,7 @@ def bolinger_reversal():
 
     plt.figure(figsize=(9, 9))
     plt.subplot(3, 1, 1)
-    plt.title('SK Hynix Bollinger Band(20 day, 2 std) - Reversals')
+    plt.title('Bollinger Band(20 day, 2 std) - Reversals')
     plt.plot(df.index, df['close_price'], 'b', label='close_price')
     plt.plot(df.index, df['upper'], 'r--', label ='Upper band')
     plt.plot(df.index, df['MA20'], 'k--', label='Moving average 20')
