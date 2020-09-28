@@ -1,10 +1,55 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
+import pandas as pd
+from tensorflow import keras
 __all__ = [
     'MinMaxScaler',
     'get_train_test_data',
-    'normalize'
+    'normalize',
+    'plot_history',
+    'stat',
+    'PrintDot'
 ]
+
+# 에포크가 끝날 때마다 점(.)을 출력해 훈련 진행 과정을 표시합니다
+class PrintDot(keras.callbacks.Callback):
+  def on_epoch_end(self, epoch, logs):
+    if epoch % 100 == 0: print('')
+    print('.', end='')
+
+def plot_history(history):
+  # history = result of fit
+  hist = pd.DataFrame(history.history)
+  hist['epoch'] = history.epoch
+
+  plt.figure(figsize=(8,12))
+
+  plt.subplot(2,1,1)
+  plt.xlabel('Epoch')
+  plt.ylabel('Mean Abs Error [MPG]')
+  plt.plot(hist['epoch'], hist['mae'],
+           label='Train Error')
+  plt.plot(hist['epoch'], hist['val_mae'],
+           label = 'Val Error')
+  plt.ylim([0,5])
+  plt.legend()
+
+  plt.subplot(2,1,2)
+  plt.xlabel('Epoch')
+  plt.ylabel('Mean Square Error [$MPG^2$]')
+  plt.plot(hist['epoch'], hist['mse'],
+           label='Train Error')
+  plt.plot(hist['epoch'], hist['val_mse'],
+           label = 'Val Error')
+  plt.ylim([0,20])
+  plt.legend()
+  plt.show()
+
+def stat(df):
+    return df.describe().transpose()
+
+def norm(df, mean, std):
+  return (df - mean) / std
 
 # prob distribute
 def normalize(policy):
