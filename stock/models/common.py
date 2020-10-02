@@ -54,9 +54,6 @@ class BaseNameModel(models.Model):
     class Meta:
         abstract = True
 
-    def __str__(self):
-        return f" en name: {self.name_en} \n ko_name: {self.name_ko}"
-
 
 class UserMixin(models.Model):
     
@@ -78,4 +75,4 @@ class OHLC(models.Model):
     close_price = models.IntegerField(blank=False)
 
     class Meta:
-        abstract = True    
+        abstract = True

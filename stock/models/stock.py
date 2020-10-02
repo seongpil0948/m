@@ -14,11 +14,13 @@ __all__ = [
 # async def get_all_corper():
 #     await return [c['code'] for c in Company.objects.values('code')]  
 
+
 def get_all_corper():
     codes = []
     for c in Company.objects.values('code'):
         codes.append(c['code'])
     return codes
+
 
 class Company(DateModel, BaseActiveModel, BaseNameModel):
     code = models.CharField(
@@ -31,6 +33,9 @@ class Company(DateModel, BaseActiveModel, BaseNameModel):
         help_text='업종코드',
         max_length=50
     )
+
+    def __str__(self):
+        return f"{self.name_ko}-{self.code}"
 
 
 class DailyPrice(OHLC):
@@ -54,3 +59,6 @@ class DailyPrice(OHLC):
     class Meta:
         # FYI(참고로) it throws a django.db.utils.IntegrityError if you try to add a duplicate
         unique_together = ('code', 'date',)
+
+    def __str__(self):
+        return f"{self.date}-{self.code_id}"
