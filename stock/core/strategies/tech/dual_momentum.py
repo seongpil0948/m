@@ -12,7 +12,7 @@ class DualMomentum(Market):
     """
      한국형 : 3개월, 한국/해외 : 12 개월 추천
     """
-    def __init__(self, start_date="2020-05-01", end_date="2020-08-06", stock_count=10):
+    def __init__(self, start_date='2019-09-04', end_date='2019-09-19', stock_count=10):
         self.start_date, self.end_date = get_times(start_date=start_date, end_date=end_date)
         super().__init__(start_date=self.start_date, end_date=self.end_date) # for codes
         self.corpers = super().all_corp_info
