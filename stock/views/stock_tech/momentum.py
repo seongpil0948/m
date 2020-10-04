@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from stock.serializers.stock_tech.momentum import DualMomentumSerializer
-from stock.core.strategies import DualMomentum
+from stock.core.strategies.tech import DualMomentum
 
 __all__ = [
     'dual_momentum'

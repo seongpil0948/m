@@ -56,7 +56,8 @@ class Market():
                 if col not in data: 
                     data[col] = [] 
                 data[col].append(i.__dict__[col])
-        return pd.DataFrame(data=data)
+        df = pd.DataFrame(data=data).set_index('date', drop=True)
+        return df.drop(['code_id'], axis='columns')
     
     @property
     def close_prices(self):
