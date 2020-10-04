@@ -20,7 +20,7 @@ def lstm(raw_df, window_size=10, batch_size=30 , epochs=10):
   model.add(LSTM(units=10, activation='relu'))
   model.add(Dropout(0.1))
   model.add(Flatten())
-  model.add(Dense(3))
+  model.add(Dense(3, activation='softmax'))
 
   model.compile(optimizer='adam', loss='mean_squared_error')
   model.fit(train_x, train_y, epochs=60, batch_size=30)
