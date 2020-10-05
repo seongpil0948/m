@@ -20,7 +20,7 @@ from stock.core.data import Market
 
 __all__ = ['bolinger_band']
 
-def bolinger_band(code):
+def bolinger_band(code='285130'):
     df = Market(code=code).get_daily_price
     # df = df[60: 200] # 이동평균은 20 이후부터 표시
     df['MA5'] = df['close_price'].rolling(window=20).mean() # mean avg
@@ -57,7 +57,6 @@ def bolinger_band(code):
     # Money Flow Index
     df['MFI20'] = 100 - 100 / (1 + df['MFR'])
 
-    df = df.set_index('date', drop=False)
     plt.figure(figsize=(9, 5)) 
     plt.plot(df.index, df['close_price'], color='#0000ff', label='close_price')
     plt.plot(df.index, df['upper'], 'r--', label = 'Upper band')      
