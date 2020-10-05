@@ -1,1 +1,1 @@
-web: gunicorn m_back.wsgi --log-file -
+web: gunicorn runserver.stock --log-file=-
