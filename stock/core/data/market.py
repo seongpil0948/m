@@ -31,6 +31,8 @@ class Market():
         self.code = code
         self.codes = [i['code'] for i in Company.objects.all().values('code')]
         self.start, self.end = get_times(start_date=start_date, end_date=end_date)
+        self.df = self.get_daily_price # basic df
+
     @property
     def get_corp_info(self):
         return Company.objects.get(pk=self.code).__dict__
@@ -62,13 +64,3 @@ class Market():
     @property
     def close_prices(self):
         return self.get_daily_price['close_price'].to_list()
-
-
-    # @property
-    # @NotImplemented
-    # def get_all_price(self, start_date=None, end_date=None):
-    #     start, end = get_times(start_date=start_date, end_date=end_date)
-    #     q = DailyPrice.objects.filter(
-    #         date__gte=start, 
-    #         date__lte=end
-    #     ).order_by('-date')
