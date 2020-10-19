@@ -154,14 +154,14 @@ SWAGGER_SETTINGS = {
     },
     'DEFAULT_FILTER_INSPECTORS': [
         # TODO: 문서 함 보자
-        'stock.util.swagger_settings.DjangoFilterInspector',
+        'stock.utils.swagger_settings.DjangoFilterInspector',
         # swagger defaults
         'drf_yasg.inspectors.CoreAPICompatInspector',
     ],
     'DEFAULT_FIELD_INSPECTORS': [
         # custom
         # TODO: 문서 함 보자
-        'stock.util.swagger_settings.MultiCollectionFormatInspector',
+        'stock.utils.swagger_settings.MultiCollectionFormatInspector',
         # swagger defaults
         'drf_yasg.inspectors.CamelCaseJSONFilter',
         'drf_yasg.inspectors.RecursiveFieldInspector',
