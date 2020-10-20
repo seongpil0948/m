@@ -189,8 +189,8 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 # S3
-AWS_ACCESS_KEY_ID = os.environ.get('M_AWS_ACCESS_KEY_ID', 'None')
-AWS_SECRET_ACCESS_KEY = os.environ.get('M_AWS_SECRET_ACCESS_KEY', 'None')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', 'None')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', 'None')
 AWS_REGION = 'ap-northeast-2'
 AWS_STORAGE_BUCKET_NAME = 'mmoney'
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com"
