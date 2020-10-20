@@ -1,6 +1,11 @@
+import io
+import uuid
+import boto3
 import matplotlib.pyplot as plt
 
+from django.conf import settings
 from stock.core.data import Market
+from stock.utils.s3 import upload_file, put_object
 """
 볼린저 밴드는 다음과 같이 구성된다.
     1. N기간 동안의 이동평균(MA)
@@ -87,5 +92,13 @@ def bolinger_band(code='285130'):
             plt.plot(df.index.values[i], 0, 'bv')
     plt.grid(True)
     plt.legend(loc='best')
-    plt.show();
 
+    img_data = io.BytesIO()
+    plt.savefig(img_data, format='png')
+
+    tech_name = 'bollinger_band'  # 기법명
+    file_name = str(uuid.uuid4())  # 파일명 임시로 uuid 로 박아둠
+
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+    bucket.put_object(Body=img_data, ContentType='image/png', Key=f'media/{tech_name}/{file_name}.png')
