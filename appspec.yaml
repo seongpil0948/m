@@ -1,12 +1,12 @@
-version: 1.2.1
+version: 0.0
 os: linux
 files:
   - source: /	# CodeDeploy에서 전달해 준 파일 중 destination으로 이동시킬 대상을 루트로 지정(전체파일)
-    destination: /home/ubuntu/app/	# source에서 지정된 파일을 받을 위치, 이후 jar를 실행하는 등은 destination에서 옮긴 파일들로 진행
+    destination: /home/ubuntu/app	# source에서 지정된 파일을 받을 위치, 이후 jar를 실행하는 등은 destination에서 옮긴 파일들로 진행
     overwrite: yes
 
 permissions:
-  - object: /
+  - object: /home/ubuntu/app
     pattern: "**"
     owner: ubuntu
     group: ubuntu
