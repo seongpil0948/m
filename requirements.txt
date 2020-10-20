@@ -119,3 +119,4 @@ widgetsnbextension==3.5.1
 wrapt==1.12.1
 yfinance==0.1.54
 zipp==3.2.0
+gunicorn==20.0.4
