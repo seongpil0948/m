@@ -63,7 +63,7 @@ def MinMaxScaler(data):
     # 0으로 나누기 에러가 발생하지 않도록 매우 작은 값(1e-7)을 더해서 나눔
     return numerator / (denominator + 1e-7)
 
-def get_train_test_data(raw_df, window_size, to_float=True):
+def get_train_test_data(raw_df, window_size, to_float=True, train_test_ratio=0.7):
     dfx = raw_df
     # dfx = raw_df[['open_price', 'high_price', 'low_price', 'close_price', 'volume']]
     if to_float:
@@ -82,7 +82,7 @@ def get_train_test_data(raw_df, window_size, to_float=True):
         data_y.append(_y)
     print(_x, "->", _y)
 
-    train_size = int(len(data_y) * 0.7)
+    train_size = int(len(data_y) * train_test_ratio)
     train_x = np.array(data_x[0 : train_size])
     train_y = np.array(data_y[0 : train_size])
 

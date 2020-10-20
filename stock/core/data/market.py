@@ -25,12 +25,22 @@ def get_times(start_date=None, end_date=None, return_type=str):
             end = datetime.datetime(end[0], end[1], end[2])
     return start, end
 
-
+# from stock.core.data.market import Market 
 class Market():
     def __init__(self, start_date="2020-01-01", end_date="2020-05-01", code='285130'):
         self.code = code
         self.codes = [i['code'] for i in Company.objects.all().values('code')]
         self.start, self.end = get_times(start_date=start_date, end_date=end_date)
+        self.df = self.get_daily_price # basic df
+
+    def add_rolling(self, window_size=10):
+        add_colums = ['MMax', 'MAvg', 'MMin']
+        self.df['MMax'] =  self.df['close_price'].rolling(window=window_size).max()
+        self.df['MAvg'] =  self.df['close_price'].rolling(window=window_size).mean()                       
+        self.df['MMin'] =  self.df['close_price'].rolling(window=window_size).min()
+        for col in add_colums:
+            self.df[col] = self.df[col].fillna(method='bfill')
+
     @property
     def get_corp_info(self):
         return Company.objects.get(pk=self.code).__dict__
@@ -61,14 +71,4 @@ class Market():
     
     @property
     def close_prices(self):
-        return self.get_daily_price['close_price'].to_list()
-
-
-    # @property
-    # @NotImplemented
-    # def get_all_price(self, start_date=None, end_date=None):
-    #     start, end = get_times(start_date=start_date, end_date=end_date)
-    #     q = DailyPrice.objects.filter(
-    #         date__gte=start, 
-    #         date__lte=end
-    #     ).order_by('-date')
+        return self.get_daily_price['close_price'].to_list()                    
