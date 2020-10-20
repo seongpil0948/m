@@ -2,6 +2,7 @@ import os
 import logging
 import boto3
 from botocore.exceptions import ClientError
+from django.conf import settings
 
 
 def upload_file(file_name, bucket='mmoney', object_name=None, ACL='public-read'):
@@ -87,6 +88,26 @@ def upload_fileobj(file, bucket='mmoney', object_name=None, ACL='public-read'):
         logging.error(e)
         return False
     return True
+
+
+def plt_upload(file, path):
+    """
+    file: 업로드 할 이미지 파일을 넣어주시면 됩니다.
+    path: 업로드 할 경로를 넣어주시면 됩니다.
+
+    example:
+    img_data = io.BytesIO()
+    plt.savefig(img_data, format='png')
+
+    tech_name = 'bollinger_band'  # 기법명
+    file_name = str(uuid.uuid4())  # 파일명 임시로 uuid 로 박아둠
+    path = f'media/{tech_name}/{file_name}.png'
+
+    plt_upload(img_data, path)
+    """
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+    bucket.put_object(Body=file, ContentType='image/png', Key=path)
 
 
 if __name__ == "__main__":
