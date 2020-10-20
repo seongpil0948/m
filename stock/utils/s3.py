@@ -107,7 +107,11 @@ def plt_upload(file, path):
     """
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
-    bucket.put_object(Body=file, ContentType='image/png', Key=path)
+    try:
+        bucket.put_object(Body=file, ContentType='image/png', Key=path)
+    except ClientError as e:
+        logging.error(e)
+        return False
 
 
 if __name__ == "__main__":
