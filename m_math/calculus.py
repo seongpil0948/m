@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pylab as plt
 
-from stock.types import Vector1D, list1D
+from m_types import Vector1D, list1D
 
 """ 
 numerical_analysis(수치해석) 적으로 작성된 코드로
