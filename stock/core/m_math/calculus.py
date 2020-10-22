@@ -1,7 +1,10 @@
 import numpy as np
 import matplotlib.pylab as plt
 
-from m_math import factorial
+def factorial(n):
+  if n == 1:
+    return 1
+  return n * factorial(n - 1)
 
 """ 
 numerical_analysis(수치해석) 적으로 작성된 코드로
@@ -35,21 +38,20 @@ def partial_derivative(f, x):
 def higher_partial_derivative(f, x, n):
   """ 
   Approximate using Taylor Series
+  https://m.blog.naver.com/mykepzzang/220347268832
   haha 뒤에 들어가야할 -Remainder 구현해야함
   """
-  h = 1e-8
+  h = 0.000001
   f_one =  derivative(f, x)
-  haha = f(x + h) * (1 / h ** n) * factorial(n) - f_one
+  result = f(x + h) * (1 / h ** n) * factorial(n) - f_one
   
-  if n == 0:
-    return 0
-  
-  return haha - higher_partial_derivative(f, x, n-1)
-  
+  for i in list(range(n))[1:]: # 1 부터 시작하며 길이는 n-1
+    result -= higher_partial_derivative(f, x, n - i)
+  return result
 
 """
 def f1(x):
-  return np.sum(x ** 2)
+  return np.sum(x ** 6)
 
 
 # 이처럼 (x0,x1) 각 점에서의 기울기를 계산할 수 있다.
