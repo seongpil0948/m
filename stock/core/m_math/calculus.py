@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pylab as plt
 
+from m_math import factorial
+
 """ 
 numerical_analysis(수치해석) 적으로 작성된 코드로
 기존 함수의 정의 와는 조금 다를 수 있다
@@ -30,7 +32,19 @@ def partial_derivative(f, x):
 
     return grad
 
-def second_partial_derivative(f, x):
+def higher_partial_derivative(f, x, n):
+  """ 
+  Approximate using Taylor Series
+  haha 뒤에 들어가야할 -Remainder 구현해야함
+  """
+  h = 1e-8
+  f_one =  derivative(f, x)
+  haha = f(x + h) * (1 / h ** n) * factorial(n) - f_one
+  
+  if n == 0:
+    return 0
+  
+  return haha - higher_partial_derivative(f, x, n-1)
   
 
 """
