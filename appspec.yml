@@ -10,3 +10,9 @@ permissions:
     pattern: "**"
     owner: ubuntu
     group: ubuntu
+hooks:
+  AfterInstall:
+    - location: /home/ubuntu/app/scripts/start.sh
+      timeout: 60
+      runas: root
+

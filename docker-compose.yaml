@@ -1,19 +1,28 @@
 version: "3.8"
 
 services:
-  nginx:
-    image: nginx:latest
-    ports:
-      - '80:80'
-    volumes:
-      - .:/app
-      - ./nginx:/etc/nginx/conf.d
-      - ./staticfiles:/static
-    depends_on:
-      - web
+        # nginx:
+        # image: nginx:latest
+        # ports:
+        # - '80:80'
+        # volumes:
+        #  - .:/app
+        #  - ./nginx:/etc/nginx/conf.d
+        #  - ./staticfiles:/static
+        #  depends_on:
+        #  - web
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      M_DATABASE: ${M_DATABASE}
+      M_USERNAME: ${M_USERNAME}
+      M_PASSWORD: ${M_PASSWORD}
+      M_HOSTNAME: ${M_HOSTNAME}
+    command: ["chmod", "+x", "./scripts/start.sh", "./scripts/start.sh"]
     volumes:
       - .:/app
     ports:
