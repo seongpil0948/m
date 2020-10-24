@@ -1,7 +1,7 @@
 echo "Setting: ${DJANGO_SETTINGS_MODULE}"
 
-echo "ls"
-ls -al
+echo "WORKDIR"
+cd ~/app
 
 echo "Migrate DB"
 python manage.py migrate
