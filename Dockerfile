@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install -y \
 #    && rm -rf /var/cache/apt/archives \
 #    && mkdir /app
 
+RUN mkdir /app
+
 WORKDIR /app
 
 ADD requirements.txt /app/
