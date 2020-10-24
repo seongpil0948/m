@@ -11,7 +11,7 @@ env:
 jobs:
   deploy:
     name: DEPLOY
-    runs-on: ec2-user-18.04
+    runs-on: ubuntu-18.04
 
     steps:
       - name: Checkout
