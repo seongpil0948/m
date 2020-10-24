@@ -11,8 +11,7 @@ permissions:
     owner: ubuntu
     group: ubuntu
 hooks:
-  AfterInstall:
-    - location: /home/ubuntu/app/scripts/start.sh
+  ApplicationStart:
+    - location: scripts/start.sh
       timeout: 60
-      runas: root
-
+      runas: ubuntu
