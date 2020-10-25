@@ -119,6 +119,14 @@ def plt_upload(file, tech_name):
         os.remove(f'media/{target}')
 
 def plt_upload_wrap(plt, tech_name):
+    """
+    [summary] :
+        plt_upload 전에 그냥 저장할 plt 객체를 save 하지말고 이함수에 넣으면
+        됌.니다
+
+    plt = 저장만 하면 되는 plt 객체 넣으시고
+    tech_name = media 하위에 폴더로 설정될 것
+    """
     a = str(datetime.today()).split(' ')
     current = a[0] + ':' + a[1]
     file_name = current[:current.rfind('.')] + '.png'
