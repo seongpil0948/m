@@ -23,8 +23,8 @@ services:
       M_PASSWORD: ${M_PASSWORD}
       M_HOSTNAME: ${M_HOSTNAME}
     command: >
-      sh -c "chmod -R 755 ./scripts
-            && ./scripts/start_web.sh"
+      sh -c "chmod -R 755 ./scripts &&
+            ./scripts/start_web.sh"
     volumes:
       - .:/app
     ports:
