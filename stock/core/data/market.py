@@ -34,10 +34,12 @@ class Market():
         self.df = self.get_daily_price # basic df
 
     def add_rolling(self, window_size=10):
-        add_colums = ['MMax', 'MAvg', 'MMin']
-        self.df['MMax'] =  self.df['close_price'].rolling(window=window_size).max()
-        self.df['MAvg'] =  self.df['close_price'].rolling(window=window_size).mean()                       
-        self.df['MMin'] =  self.df['close_price'].rolling(window=window_size).min()
+        add_colums = ['MMax', 'MAvg', 'MMin', 'STD']
+        roll = self.df['close_price'].rolling(window=window_size)
+        self.df['MMax'] =  roll.max()
+        self.df['MAvg'] =  roll.mean()                       
+        self.df['MMin'] =  roll.min()
+        self.df['STD'] = roll.std()
         for col in add_colums:
             self.df[col] = self.df[col].fillna(method='bfill')
 

@@ -29,5 +29,6 @@ urlpatterns = [
     path('docs/', schema_view.with_ui('redoc', cache_timeout=0)),
     re_path('swagger.(json|yaml)$', schema_view.without_ui(cache_timeout=0)),
 
-    path('dual_momentum', dual_momentum)
+    path('dual_momentum', dual_momentum),
+    path('bolinger_band', get_bolinger_band),
 ]
