@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from django.conf import settings
 from stock.core.data import Market
-from stock.utils.s3 import upload_file, put_object, plt_upload
+from stock.utils.s3 import plt_upload_wrap
 """
 볼린저 밴드는 다음과 같이 구성된다.
     1. N기간 동안의 이동평균(MA)
@@ -93,10 +93,17 @@ def bolinger_band(code='285130', window_size=10):
     plt.grid(True)
     plt.legend(loc='best')
 
-    file_name = str(uuid.uuid4())
-    plt.savefig(f"media/" + file_name)  # media/ 아래 저장
-    img_data = open("media/" + f"{file_name}.png", "rb")  # image read
-
-    plt_upload(img_data, tech_name='bollinger_band')  # upload
-    path = f'media/bollinger_band/{file_name}.png'
+    path = plt_upload_wrap(plt=plt, tech_name=bolinger_band.__name__)
     return path
+    
+    
+    
+    
+    
+
+
+
+
+
+
+    
