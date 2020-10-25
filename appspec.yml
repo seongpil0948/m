@@ -10,9 +10,9 @@ permissions:
     group: ubuntu
 hooks:
   AfterInstall:
-#    - location: scripts/install_os_dependencies.sh
-#      timeout: 6000
-#      runas: root
+    - location: scripts/install_os_dependencies.sh
+      timeout: 6000
+      runas: root
     - location: scripts/install_python_dependencies.sh
       timeout: 6000
       runas: ubuntu
