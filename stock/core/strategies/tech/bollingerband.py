@@ -93,11 +93,8 @@ def bolinger_band(code='285130'):
     plt.grid(True)
     plt.legend(loc='best')
 
-    img_data = io.BytesIO()
-    plt.savefig(img_data, format='png')
+    file_name = str(uuid.uuid4())
+    plt.savefig(f"media/" + file_name)  # media/ 아래 저장
+    img_data = open("media/" + f"{file_name}.png", "rb")  # image read
 
-    tech_name = 'bollinger_band'  # 기법명
-    file_name = str(uuid.uuid4())  # 파일명 임시로 uuid 로 박아둠
-    path = f'media/{tech_name}/{file_name}.png'
-
-    plt_upload(img_data, path)
+    plt_upload(img_data, tech_name='bollinger_band')  # upload

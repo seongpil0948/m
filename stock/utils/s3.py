@@ -90,7 +90,7 @@ def upload_fileobj(file, bucket='mmoney', object_name=None, ACL='public-read'):
     return True
 
 
-def plt_upload(file, path):
+def plt_upload(file, tech_name):
     """
     file: 업로드 할 이미지 파일을 넣어주시면 됩니다.
     path: 업로드 할 경로를 넣어주시면 됩니다.
@@ -107,11 +107,15 @@ def plt_upload(file, path):
     """
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+    target = file.name.split('/')[1]
+    path = f'media/{tech_name}/{target}'
     try:
         bucket.put_object(Body=file, ContentType='image/png', Key=path)
     except ClientError as e:
         logging.error(e)
         return False
+    else:
+        os.remove(f'media/{target}')
 
 
 if __name__ == "__main__":
