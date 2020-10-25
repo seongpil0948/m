@@ -24,7 +24,7 @@ services:
       M_HOSTNAME: ${M_HOSTNAME}
     command: >
       chmod -R 755 ./scripts
-      && ./scripts/start_web.sh"
+      && ./scripts/start_web.sh
     volumes:
       - .:/app
     ports:
