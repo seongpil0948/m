@@ -25,15 +25,15 @@ from stock.utils.s3 import upload_file, put_object, plt_upload
 
 __all__ = ['bolinger_band']
 
-def bolinger_band(code='285130'):
-    df = Market(code=code).get_daily_price
-    # df = df[60: 200] # 이동평균은 20 이후부터 표시
-    df['MA5'] = df['close_price'].rolling(window=20).mean() # mean avg
-    df['stddev'] = df['close_price'].rolling(window=20).std()
-    df['upper'] = df['MA5'] + (df['stddev'] * 2)
-    df['lower'] = df['MA5'] - (df['stddev'] * 2)
+def bolinger_band(code='285130', window_size=10):
+    m = Market(code=code)
+    m.add_rolling(window_size=window_size)
+    df = m.df
+
+    df['upper'] = df['MAvg'] + (df['STD'] * 2)
+    df['lower'] = df['MAvg'] - (df['STD'] * 2)
     df['PB'] = (df['close_price'] - df['lower']) / (df['upper'] - df['lower']) # 1
-    df['bandwidth'] = (df['upper'] - df['lower']) / df['MA5'] * 100 # 2
+    df['bandwidth'] = (df['upper'] - df['lower']) / df['MAvg'] * 100 # 2
 
     """
     현금 흐름(Money Flow) = 중심 가격 * 거래량
@@ -65,7 +65,7 @@ def bolinger_band(code='285130'):
     plt.figure(figsize=(9, 5)) 
     plt.plot(df.index, df['close_price'], color='#0000ff', label='close_price')
     plt.plot(df.index, df['upper'], 'r--', label = 'Upper band')      
-    plt.plot(df.index, df['MA5'], 'k--', label='Moving average 20') 
+    plt.plot(df.index, df['MAvg'], 'k--', label='Moving average 20') 
     plt.plot(df.index, df['lower'], 'c--', label = 'Lower band')
     plt.fill_between(df.index, df['upper'], df['lower'], color='0.9')
     for i in range(len(df.close_price)):
@@ -98,3 +98,5 @@ def bolinger_band(code='285130'):
     img_data = open("media/" + f"{file_name}.png", "rb")  # image read
 
     plt_upload(img_data, tech_name='bollinger_band')  # upload
+    path = f'media/bollinger_band/{file_name}.png'
+    return path
