@@ -32,4 +32,5 @@ urlpatterns = [
     path('dual_momentum', dual_momentum),
     path('bolinger_band', get_bolinger_band),
     path('get_bolinger_band_reversal', get_bolinger_band_reversal),
+    path('get_efficient_portfolio', get_efficient_portfolio),
 ]

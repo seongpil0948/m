@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from stock.core.data import Market
 from stock.models import Company, get_all_corper
+from stock.utils.s3 import plt_upload_wrap
 
 """
 efficient_frontier and sharpe PortFolio = 효율적 투자선과 샤프지수 포폴
@@ -20,9 +21,11 @@ def efficient_portfolio():
     codes = get_all_corper()
     datas = {}
     for c in codes:
-        datas[c] = Market(code=c).get_daily_price['close_price']
+        df = Market(code=c).df
+        if df is not None:
+            datas[c] = df['close_price']
     dfs = pd.DataFrame(data=datas)
-
+    codes = dfs.keys().to_list()
     daily_ret = dfs.pct_change() # percent_change 일간 수익률
     annual_ret = daily_ret.mean() * 252 
 
@@ -81,5 +84,7 @@ def efficient_portfolio():
         marker='X', s=200) # 7
     plt.title('Portfolio Optimization') 
     plt.xlabel('Risk') 
-    plt.ylabel('Expected Returns') 
-    plt.show()
+    plt.ylabel('Expected Returns')
+
+    path = plt_upload_wrap(plt=plt, tech_name=efficient_portfolio.__name__)
+    return path
