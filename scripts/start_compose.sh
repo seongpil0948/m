@@ -1,2 +1,5 @@
+#!/bin/bash
+
 echo "Starting docker-compose"
-docker-compose up --build -d
+docker build -t porsche .
+docker-compose up -d

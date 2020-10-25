@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Setting: ${DJANGO_SETTINGS_MODULE}"
 
 echo "WORKDIR"
