@@ -22,7 +22,7 @@ services:
       M_USERNAME: ${M_USERNAME}
       M_PASSWORD: ${M_PASSWORD}
       M_HOSTNAME: ${M_HOSTNAME}
-    command: ["chmod", "+x", "./scripts/start.sh", "./scripts/start.sh"]
+    command: ["./scripts/start_web.sh"]
     volumes:
       - .:/app
     ports:
