@@ -7,7 +7,7 @@ from stock.core.strategies.tech import bolinger_band
 from stock.serializers.stock_tech import BolingerBandSerializer
 
 __all__ = [
-  'bolinger_band'
+  'get_bolinger_band'
 ]
 
 @swagger_auto_schema(
@@ -23,12 +23,14 @@ __all__ = [
     tags=['tech'],
 )
 @api_view(['GET'])
-def bolinger_band(request):
-    serializer = BolingerBandSerializer(data=request.query_params)
-    if serializer.is_valid(raise_exception=True):
-      res = { 'img_path': bolinger_band() }
-      return Response(res, status=status.HTTP_200_OK)
-    else:
-      return Response(request, status=status.HTTP_400_BAD_REQUEST)
+def get_bolinger_band(request):
+	serializer = BolingerBandSerializer(data=request.query_params)
+	if serializer.is_valid(raise_exception=True):
+		window_size = serializer.data.get('window_size')
+		code = serializer.data.get('code')
+		image_path = bolinger_band(code, window_size)
+		return Response({'image_path': image_path}, status=status.HTTP_200_OK)
+	else:
+		return Response(request.query_params, status=status.HTTP_400_BAD_REQUEST)
 
         

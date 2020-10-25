@@ -30,5 +30,5 @@ urlpatterns = [
     re_path('swagger.(json|yaml)$', schema_view.without_ui(cache_timeout=0)),
 
     path('dual_momentum', dual_momentum),
-    path('bolinger_band', bolinger_band)
+    path('bolinger_band', get_bolinger_band),
 ]
