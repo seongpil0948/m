@@ -3,6 +3,7 @@ import logging
 import boto3
 from botocore.exceptions import ClientError
 from django.conf import settings
+from datetime import datetime
 
 
 def upload_file(file_name, bucket='mmoney', object_name=None, ACL='public-read'):
@@ -116,6 +117,20 @@ def plt_upload(file, tech_name):
         return False
     else:
         os.remove(f'media/{target}')
+
+def plt_upload_wrap(plt, tech_name):
+    a = str(datetime.today()).split(' ')
+    current = a[0] + ':' + a[1]
+    file_name = current[:current.rfind('.')] + '.png'
+    dir_name = "media/"
+    
+    if not os.path.isdir(dir_name):
+        os.mkdir(dir_name)
+    plt.savefig(os.path.join(dir_name, file_name))  # media/ 아래 저장
+    img_data = open(f"{os.path.join(dir_name, file_name)}", "rb")  # image read
+    plt_upload(img_data, tech_name=tech_name)  # upload
+    path = os.path.join(dir_name, tech_name, file_name)
+    return path
 
 
 if __name__ == "__main__":
