@@ -27,10 +27,7 @@ def dual_momentum(request):
     serializer = DualMomentumSerializer(data=request.query_params)
     if serializer.is_valid(raise_exception=True):
         data = serializer.validated_data
-        ranked = DualMomentum(
-            start_date=data['start_date'],
-            end_date=data['end_date'],
-            stock_count=data['stock_count']).abs_momentum
+        ranked = DualMomentum(**serializer.validated_data).abs_momentum
         return Response(ranked, status=status.HTTP_200_OK)
     else:
         return Response(request, status=status.HTTP_400_BAD_REQUEST)
