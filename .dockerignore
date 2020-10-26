@@ -1,0 +1,22 @@
+# dockerignore specific
+.vscode
+.git
+.gitignore
+.gitlab-ci.yml
+.coverage
+.dockerignore
+docker-compose.yml
+Dockerfile
+README.md
+nginx.conf
+samples/
+docker-compose-develop.yml
+
+# as well as gitignore
+.DS_Store
+.env
+venv/
+staticfiles/
+mediafiles/
+logfiles/
+*.sqlite3

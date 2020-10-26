@@ -1,16 +1,14 @@
 version: "3"
 
 services:
-        # nginx:
-        # image: nginx:latest
-        # ports:
-        # - '80:80'
-        # volumes:
-        #  - .:/app
-        #  - ./nginx:/etc/nginx/conf.d
-        #  - ./staticfiles:/static
-        #  depends_on:
-        #  - web
+  nginx:
+    image: nginx:latest
+    volumes:
+      - /home/ubuntu/app/nginx.conf:/etc/nginx/conf.d:ro
+    ports:
+      - '80:80'
+    depends_on:
+      - web
   web:
     image: porsche
     environment:
