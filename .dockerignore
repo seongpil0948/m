@@ -5,8 +5,8 @@
 .gitlab-ci.yml
 .coverage
 .dockerignore
-docker-compose.yml
-Dockerfile
+# docker-compose.yml
+# Dockerfile
 README.md
 nginx.conf
 samples/
