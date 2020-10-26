@@ -26,9 +26,7 @@ __all__ = [
 def get_bolinger_band_reversal(request):
 	serializer = BolingerBandSerializer(data=request.query_params)
 	if serializer.is_valid(raise_exception=True):
-		window_size = serializer.data.get('window_size')
-		code = serializer.data.get('code')
-		image_path = bolinger_reversal(code, window_size)
+		image_path = bolinger_reversal(**serializer.data)
 		return Response({'image_path': image_path}, status=status.HTTP_200_OK)
 	else:
 		return Response(request.query_params, status=status.HTTP_400_BAD_REQUEST)
