@@ -140,7 +140,9 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
     'NON_FIELD_ERRORS_KEY': 'errors',
     'USE_X_FORWARDED_HOST': True,
-    'EXCEPTION_HANDLER': 'stock.core.exceptions.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'stock.core.exceptions.custom_exception_handler',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 25
 }
 
 # Swagger
