@@ -5,15 +5,15 @@ from mplfinance.original_flavor import candlestick_ohlc
 import matplotlib.dates as mdates
 
 from stock.core.data import Market
-from stock.models import Company, get_all_corper
+from stock.utils.s3 import plt_upload_wrap
 
 __all__ = [
     'tripple_screen'
 ]
 
-def tripple_screen():
-    codes = get_all_corper()
-    df = Market(code=codes[0], start_date="2019-01-01").get_daily_price
+def tripple_screen(*args, **kwargs):
+    m = Market(**kwargs)
+    df = m.df
     df.index = df.index.map(
         lambda x: datetime.datetime(
             *[int(i) for i in x.split(' ')[0].split('-')]
@@ -75,4 +75,6 @@ def tripple_screen():
     plt.plot(df.number, df['slow_d'], color='k', label='%D')
     plt.yticks([0, 20, 80, 100])
     plt.legend(loc='best')
-    plt.show()
+
+    path = plt_upload_wrap(plt=plt, tech_name=tripple_screen.__name__)
+    return path
