@@ -4,7 +4,8 @@ services:
   nginx:
     image: nginx:latest
     volumes:
-      - ./app/nginx.conf:/etc/nginx/conf.d:ro
+      - .:/app
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - '80:80'
     depends_on:
@@ -23,9 +24,5 @@ services:
     command: >
       sh -c "chmod -R 755 ./scripts &&
             ./scripts/start_web.sh"
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
     expose:
-      - "3000"
+      - "8000"

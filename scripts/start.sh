@@ -3,7 +3,7 @@
 echo "Setting: ${DJANGO_SETTINGS_MODULE}"
 
 echo "WORKDIR"
-cd ~/app
+cd /app
 
 echo "Migrate DB"
 python manage.py migrate

@@ -8,7 +8,7 @@
 # docker-compose.yml
 # Dockerfile
 README.md
-nginx.conf
+nginx/nginx.conf
 samples/
 docker-compose-develop.yml
 

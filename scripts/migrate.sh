@@ -1,5 +1,5 @@
 #!/bin/bash
 
 echo "Migrating..."
-cd ~/app
+cd /app
 python manage.py migrate
