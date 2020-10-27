@@ -7,5 +7,5 @@ sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
 sudo service docker restart
 
-cd /app
+cd ~/app
 docker-compose up --build -d
