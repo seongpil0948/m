@@ -19,8 +19,9 @@ __all__ = [
     ]
 
 
-def bolinger_reversal(code='285130', window_size=10):
-    m = Market(code=code)
+def bolinger_reversal(*args, **kwargs):
+    window_size = kwargs.pop('window_size', None)
+    m = Market(**kwargs)
     m.add_rolling(window_size=window_size)
     df = m.df
 

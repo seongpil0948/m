@@ -14,7 +14,10 @@ class CompanyViewSet(viewsets.ModelViewSet):
     # ordering_fields = '__all__'
     # search_fields = ['uuid']
     # ordering = ['updated_at', 'created_at', 'uuid']
-
+    class Meta:
+        model = Company
+        fields = ['code', 'name_ko', 'name_en', 'industry_code']
+        
 
 class DailyPriceViewSet(viewsets.ModelViewSet):
     queryset = DailyPrice.objects.all()

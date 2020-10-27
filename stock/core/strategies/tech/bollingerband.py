@@ -25,8 +25,9 @@ from stock.utils.s3 import plt_upload_wrap
 
 __all__ = ['bolinger_band']
 
-def bolinger_band(code='285130', window_size=10):
-    m = Market(code=code)
+def bolinger_band(*args, **kwargs):
+    window_size = kwargs.pop('window_size', None)
+    m = Market(**kwargs)
     m.add_rolling(window_size=window_size)
     df = m.df
 

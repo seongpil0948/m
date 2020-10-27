@@ -1,4 +1,4 @@
-from stock.serializers.common.common import StartEndDate, Code
+from stock.serializers.common.common import StartEndDate
 from rest_framework import serializers
 
 __all__ = [
