@@ -1,10 +1,6 @@
 from django.urls import path, re_path
-from rest_framework.routers import DefaultRouter
-from rest_framework import routers
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-
-from stock.views.common.stock import CompanyViewSet, DailyPriceViewSet
 
 app_name = 'ai'
 
