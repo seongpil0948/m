@@ -2,8 +2,10 @@ from rest_framework import serializers
 
 __all__ = [
   'StartEndDate',
-  'Code',
-  'WindowSize'
+  'CodeSerializer',
+  'WindowSizeSerializer',
+  'StartEndCodeWindowSerializer',
+  'StartEndCodeSerializer'
 ]
 
 class StartEndDate(serializers.Serializer):
@@ -14,8 +16,20 @@ class StartEndDate(serializers.Serializer):
     max_length=50
   )
 
-class Code(serializers.Serializer):
+
+class CodeSerializer(serializers.Serializer):
   code = serializers.CharField(max_length=10)
 
-class WindowSize(serializers.Serializer):
+
+class WindowSizeSerializer(serializers.Serializer):
   window_size = serializers.IntegerField()
+
+
+class StartEndCodeSerializer(StartEndDate, CodeSerializer):
+  class Meta:
+    ref_name = 'StartEndCodeSerializer'
+
+
+class StartEndCodeWindowSerializer(StartEndDate, CodeSerializer, WindowSizeSerializer):
+  class Meta:
+    ref_name = 'StartEndCodeSerializer'

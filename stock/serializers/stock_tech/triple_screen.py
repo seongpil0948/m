@@ -1,10 +1,10 @@
-from stock.serializers.common.common import StartEndDate, Code
+from stock.serializers.common.common import StartEndDate, CodeSerializer
 
 __all__ = [
     'TrippleScreenSerializer',
 ]
 
-class TrippleScreenSerializer(StartEndDate, Code):
+class TrippleScreenSerializer(StartEndDate, CodeSerializer):
   class Meta:
     ref_name = 'TrippleScreenSerializer'
 

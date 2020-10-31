@@ -25,18 +25,24 @@ def get_times(start_date=None, end_date=None, return_type=str):
             end = datetime.datetime(end[0], end[1], end[2])
     return start, end
 
+
+def get_recently_price(code="100220"):
+    query = DailyPrice.objects.filter(code_id=code).order_by('date').last()
+    return query.date, query.close_price
+
 # from stock.core.data.market import Market 
 class Market():
     def __init__(self, start_date=None, end_date=None, code='285130'):
         if start_date is None or end_date is None:
             query = DailyPrice.objects.filter(code_id=code).order_by('date')
+            if query.first() is None:
+                raise ValueError(f"유효하지 않은 코드: {code}.")
             if start_date is None:
                 start_date = query.first().date
             if end_date:
                 end_date = query.last().date
 
         self.code = code
-        self.codes = [i['code'] for i in Company.objects.all().values('code')]
         self.start, self.end = get_times(start_date=start_date, end_date=end_date)
         self.df = self.get_daily_price # basic df
 

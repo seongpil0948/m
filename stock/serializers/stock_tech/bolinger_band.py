@@ -5,6 +5,6 @@ __all__ = [
     'BolingerBandSerializer',
 ]
 
-class BolingerBandSerializer(Code, StartEndDate, WindowSize):
+class BolingerBandSerializer(CodeSerializer, StartEndDate, WindowSizeSerializer):
   class Meta:
     ref_name = 'BolingerBandSerializer'

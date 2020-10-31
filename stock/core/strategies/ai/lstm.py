@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, LSTM, Dropout, Flatten
+from tensorflow.keras.models import load_model
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -8,8 +9,8 @@ from stock.core.data import Market
 from stock.core.strategies.ai.common import get_train_test_data, MinMaxScaler
 
 
-# m = Market('2019-01-01', '2019-09-28','207940')
-# raw_df = m.get_daily_price
+m = Market('2019-01-01', '2019-09-28','207940')
+raw_df = m.df
 def lstm(raw_df, window_size=10, batch_size=30 , epochs=10):
   train_x, train_y, test_x, test_y = get_train_test_data(raw_df=raw_df, window_size=window_size)
   column_size = train_x.shape[2]
@@ -21,7 +22,7 @@ def lstm(raw_df, window_size=10, batch_size=30 , epochs=10):
   model.add(Dense(units=1))
 
   model.compile(optimizer='adam', loss='mean_squared_error')
-  model.fit(train_x, train_y, epochs=60, batch_size=30)
+  model.fit(train_x, train_y, epochs=100, batch_size=30)
   pred_y = model.predict(test_x)
   df = MinMaxScaler(raw_df)
 

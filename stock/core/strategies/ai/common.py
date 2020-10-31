@@ -2,20 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from tensorflow import keras
+
+
 __all__ = [
     'MinMaxScaler',
     'get_train_test_data',
     'normalize',
     'plot_history',
     'stat',
-    'PrintDot'
 ]
-
-# 에포크가 끝날 때마다 점(.)을 출력해 훈련 진행 과정을 표시합니다
-class PrintDot(keras.callbacks.Callback):
-  def on_epoch_end(self, epoch, logs):
-    if epoch % 100 == 0: print('')
-    print('.', end='')
 
 def plot_history(history):
   # history = result of fit
